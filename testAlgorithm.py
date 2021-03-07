@@ -2,12 +2,10 @@ import os.path
 import numpy as np
 from PIL import Image
 
-fpath = "./images/rainbow.jpg"
+fpath = "./images/ethan.jpg"
 im = Image.open(fpath) #input image object
-im.convert('RGB')
+im = im.convert('RGB')
 imRGB = np.asarray(im) #input image rgb matrix
-size = np.shape(imRGB)
-out = np.copy(imRGB).fill(0) #output image rgb matrix
 blindness_type = '' #can be p, d, or t to select which type of colorblindness the user has
 
 #conversions between rgb colorspace and lms colorspace
@@ -39,12 +37,11 @@ tShift = np.array([[1,0,0.7],
                   [0,0,0]])
 
 #simulate input image as seen by colorblindness in rgb space
-sim = np.copy(imRGB).fill(0)
-diff = np.copy(imRGB).fill(0)
-for i in range(size[0]):
-    for j in range(size[1]):
+sim = np.zeros(np.shape(imRGB))
+out = sim
+for i in range(np.shape(imRGB)[0]):
+    for j in range(np.shape(imRGB)[1]):
         rgb = imRGB[i,j,:]
-        print(rgb)
         lmb = RGB_TO_LMS @ np.transpose(rgb)
 
         #simulate colorblindness depending on value of blindness_type in lms colorspace
@@ -59,7 +56,7 @@ for i in range(size[0]):
         sim[i,j,:] = np.transpose(LMS_TO_RGB @ simLMS)
 
         #get differences in rgb values
-        diff = im - sim
+        diff = rgb - sim[i,j,:]
 
         #get shift matrices
         if blindness_type == 'p':
@@ -69,8 +66,9 @@ for i in range(size[0]):
         else:
             shifter = tShift @ np.transpose(diff)
         
-        out[i,j,:] = rgb + shifter
+        out[i,j,:] = rgb + np.transpose(shifter)
 
 #create and save image object from shifted matrix
 outIm = Image.fromarray(out, mode = 'RGB')
-outIm.save("test", "JPEG")
+outIm.save("test.jpg", "JPEG")
+outIm.show()

@@ -24,10 +24,7 @@ document.getElementById('capture').addEventListener('click', function () {
     // canvasElement.toBlob(function(blob) {
     //     saveAs(blob, "lookin good Swag.png");
     // });
-
-    var python = require("python-shell")
-    var path = require("path")
-
+    
     let picture = webcam.snap();
     var mydiv = document.getElementById("download");
     var downloadLink = document.createElement('a');
