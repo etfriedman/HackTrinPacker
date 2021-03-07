@@ -1,6 +1,9 @@
+import os.path
 import numpy as np
+from PIL import Image
 
-im = np.array[] #input image
+fpath = "./images"
+im = Image.open(fpath) #input image
 out = np.array[] #output image
 blindness_type = '' #can be p, d, or t to select which type of colorblindness the user has
 
