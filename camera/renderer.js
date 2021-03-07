@@ -1,9 +1,3 @@
-function captureImage() {
-    console.log('capture clicked')
-};
-
-
-
 // Main Selection Code
 $(document).ready(function () {
     $('input[type=radio]').click(function () {
@@ -17,7 +11,7 @@ const webcam = new Webcam(webcamElement, 'user', canvasElement);
 // start the webcam
 webcam.start()
   .then(result =>{
-    console.log("webcam started");
+    //console.log("webcam started");
   })
   .catch(err => {
     console.log(err);
@@ -25,6 +19,20 @@ webcam.start()
 
 //image capture button
 document.getElementById('capture').addEventListener('click', function () {
+
+    // var canvasElement = document.getElementById("canvas");
+    // canvasElement.toBlob(function(blob) {
+    //     saveAs(blob, "lookin good Swag.png");
+    // });
+
+    var python = require("python-shell")
+    var path = require("path")
+
     let picture = webcam.snap();
-    document.querySelector('#download-photo').href = picture;
+    var mydiv = document.getElementById("download");
+    var downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href',picture);
+    downloadLink.setAttribute('download','imagename');
+    downloadLink.innerText = "Download Image";
+    mydiv.appendChild(downloadLink);    
 });

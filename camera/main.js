@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu, ipcMain } = require('electron');
+const {app, BrowserWindow, Menu } = require('electron');
 
 //Set environment
 process.env.NODE_ENV = 'dev';

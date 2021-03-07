@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "python-shell": "^2.0.3",
     "webcam-easy": "^1.0.5"
   }
 }

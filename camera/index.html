@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Camera Test</title>
     <link rel="stylesheet" href="app.css">
     <script src="jquery.js"></script>
     <!-- <script src="app.js"></script> COMMENTED OUT OLD VIDEO -->
@@ -31,8 +30,9 @@
     <div class = "container text-center" style="padding-bottom: 1em;">
       <button id="capture" class="btn btn-success"> Capture Image </button>
     </div>
-    <a id='download-photo' download="photo">click here</a>
+    <div id="download" class = "container text-center" style="padding-bottom: 1em;">
+    </div>
     </div>
   </body>
-  <script src="renderer.js"></script>
+  <script type="module" src="renderer.js"></script>
 </html>
