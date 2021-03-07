@@ -2,9 +2,10 @@ import os.path
 import numpy as np
 from PIL import Image
 
-fpath = "./images"
-im = Image.open(fpath) #input image
-out = np.array[] #output image
+fpath = "./images/ranbow.jpg"
+im = Image.open(fpath) #input image object
+imRGB = numpy.asarray(im, dtype=float) #input image rgb matrix
+out = np.copy(imRGB).fill(0) #output image rgb matrix
 blindness_type = '' #can be p, d, or t to select which type of colorblindness the user has
 
 #conversions between rgb colorspace and lms colorspace
@@ -38,8 +39,8 @@ tShift = np.array[[1,0,0.7],
 #simulate input image as seen by colorblindness in rgb space
 sim = np.array[]
 diff = np.array[]
-for i in np.nditer(im):
-    rgb = np.array[i[0],i[1],i[2]]
+for i in np.nditer(imRGB, order = 'C'):
+    rgb = imRGB[i]
     lmb = RGB_TO_LMS @ rgb
 
     #simulate colorblindness depending on value of blindness_type in lms colorspace
@@ -65,3 +66,7 @@ for i in np.nditer(im):
         shifter = tShift @ diff
     
     out[i] = rgb + shifter
+
+#create and save image object from shifted matrix
+outIm = Image.fromarray(out, mode = 'RGB')
+outIm.save("test", "JPEG")
